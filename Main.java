@@ -7,10 +7,10 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
-        final long deltaTime = 100;
+        final long deltaTime = 1000;
 
-        Planet Earth = new Planet(0, 0, 1, 0, 10, 20);
-        Planet Moon = new Planet(0, 1000, -2, 0, 2, 5);
+        Planet Earth = new Planet(0, 0, 0, 0, 5.9722 * Math.pow(10, 24), 6.378137 * Math.pow(10, 6));
+        Planet Moon = new Planet(0, 3.844 * Math.pow(10, 8), 1.023 * Math.pow(10, 3), 0, 7.346 * Math.pow(10, 22), 1.7381 * Math.pow(10, 3));
 
         FileWriter earth_out = new FileWriter("output_Earth.txt");
         FileWriter moon_out = new FileWriter("output_Moon.txt");
@@ -19,15 +19,13 @@ public class Main {
         bodies.add(Earth);
         bodies.add(Moon);
 
-        for (int n = 1; n <= 100; ++n) {
+        for (int n = 1; n <= 2360592; ++n) {
             Planet.tickAcceleration(bodies);
-            Planet.tickVelocity(bodies);
+            Planet.tickVelocity(bodies, deltaTime);
             Planet.tickPosition(bodies, deltaTime);
             
             earth_out.write(String.format("Tick %d: %s %n", n, Earth.toString()));
             moon_out.write(String.format("Tick %d: %s %n", n, Moon.toString()));
-
-            Thread.sleep(deltaTime);
         }
 
         earth_out.close();
